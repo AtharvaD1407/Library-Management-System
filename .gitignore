@@ -1,3 +1,4 @@
 *.class
 mysql-connector-j-9.2.0.jar
 db.sql
+run.bat
