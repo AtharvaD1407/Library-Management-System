@@ -22,6 +22,7 @@ public class User {
         JButton homeButton = new JButton("Home");
         homeButton.setBounds(30, 50, 140, 40);
         sidebar.add(homeButton);
+        homeButton.addActionListener(e -> User.main(null));
 
         JButton searchBookButton = new JButton("Search Book");
         searchBookButton.setBounds(30, 120, 140, 40);
