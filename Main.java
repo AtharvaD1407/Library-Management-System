@@ -198,7 +198,7 @@ public class Main {
     private static boolean validateLogin(String username, String password) {
         String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
         String dbUsername = "root";
-        String dbPassword = "athuSQL@1407";
+        String dbPassword = "";
 
         String query = "SELECT * FROM users WHERE name = ? AND password = ?";
 
@@ -225,7 +225,7 @@ public class Main {
     private static boolean registerUser(String email, String username, String password) {
         String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
         String dbUsername = "root";
-        String dbPassword = "athuSQL@1407";
+        String dbPassword = "";
 
         String query = "INSERT INTO users (email, name, password, role) VALUES (?, ?, ?, ?)";
 

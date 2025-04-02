@@ -22,6 +22,7 @@ public class Admin {
         JButton homeButton = new JButton("Home");
         homeButton.setBounds(30, 50, 140, 40);
         sidebar.add(homeButton);
+        homeButton.addActionListener(e -> Admin.main(null));
 
         JButton manageBooksButton = new JButton("Manage Books");
         manageBooksButton.setBounds(30, 120, 140, 40);
@@ -74,7 +75,7 @@ public class Admin {
         // Database connection
         String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
         String dbUsername = "root";
-        String dbPassword = "athuSQL@1407";
+        String dbPassword = "";
 
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             Class.forName("com.mysql.cj.jdbc.Driver");
