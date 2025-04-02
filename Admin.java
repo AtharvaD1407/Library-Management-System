@@ -132,6 +132,11 @@ public class Admin {
             JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+        logoutButton.addActionListener(e -> {
+            frame.dispose();
+            Main.main(null);
+        });
+
         frame.setVisible(true);
     }
 }
