@@ -43,7 +43,6 @@ public class Main {
             frame.dispose();
             showAuthPage();
         });
-
         frame.setVisible(true);
     }
 
@@ -120,7 +119,13 @@ public class Main {
             if (validateLogin(username, password)) {
                 JOptionPane.showMessageDialog(frame, "Login successful!");
                 frame.dispose();
-                Menu.main(null);
+
+                if (userRole == "admin") {
+                    Admin.main(null);
+                } else {
+                    User.main(null);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(frame, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -175,7 +180,13 @@ public class Main {
             if (registerUser(email, username, password)) {
                 JOptionPane.showMessageDialog(frame, "Sign Up Successful!");
                 frame.dispose();
-                Menu.main(null);
+
+                if (userRole == "user") {
+                    User.main(null);
+                } else {
+                    Admin.main(null);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(frame, "Error in signing up.", "Error", JOptionPane.ERROR_MESSAGE);
             }
