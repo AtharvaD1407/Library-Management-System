@@ -10,7 +10,7 @@ public class Admin {
     private static JLabel usersLabel;
     private static String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
     private static String dbUsername = "root";
-    private static String dbPassword = "";
+    private static String dbPassword = "athuSQL@1407";
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Admin Dashboard");
@@ -232,7 +232,7 @@ public class Admin {
                 
                 try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                     // Here would be the actual code to insert the user into database
-                    String insertQuery = "INSERT INTO users (name, email, role) VALUES (?, ?, 'user')";
+                    String insertQuery = "INSERT INTO users (name, email, password, role) VALUES (?, ?, 'password123', 'user')";
                     try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
                         pstmt.setString(1, name);
                         pstmt.setString(2, email);

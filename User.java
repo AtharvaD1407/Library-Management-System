@@ -63,7 +63,7 @@ public class User {
         // Database connection
         String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
         String dbUsername = "root";
-        String dbPassword = "";
+        String dbPassword = "athuSQL@1407";
 
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -146,7 +146,7 @@ public class User {
         // Database connection
         String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
         String dbUsername = "root";
-        String dbPassword = "";
+        String dbPassword = "athuSQL@1407";
 
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -259,7 +259,7 @@ public class User {
             // Database connection parameters
             String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
             String dbUsername = "root";
-            String dbPassword = "";
+            String dbPassword = "athuSQL@1407";
             
             try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -381,7 +381,7 @@ public class User {
         // Database connection parameters
         String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
         String dbUsername = "root";
-        String dbPassword = "";
+        String dbPassword = "athuSQL@1407";
         
         // Auto-fill functionality for title field
         titleField.addActionListener(e -> {
