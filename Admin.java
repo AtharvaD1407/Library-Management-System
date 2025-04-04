@@ -10,7 +10,7 @@ public class Admin {
     private static JLabel usersLabel;
     private static String url = "jdbc:mysql://127.0.0.1:3306/userDB?serverTimezone=UTC";
     private static String dbUsername = "root";
-    private static String dbPassword = "athuSQL@1407";
+    private static String dbPassword = "";
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Admin Dashboard");
@@ -19,14 +19,12 @@ public class Admin {
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
-        // Sidebar Panel
         JPanel sidebar = new JPanel();
         sidebar.setBounds(0, 0, 200, 600);
         sidebar.setBackground(Color.DARK_GRAY);
         sidebar.setLayout(null);
         frame.add(sidebar);
 
-        // Sidebar Buttons
         JButton homeButton = new JButton("Home");
         homeButton.setBounds(30, 50, 140, 40);
         sidebar.add(homeButton);
@@ -46,13 +44,11 @@ public class Admin {
         logoutButton.setForeground(Color.WHITE);
         sidebar.add(logoutButton);
 
-        // Header Panel
         JPanel headerPanel = new JPanel();
         headerPanel.setBounds(200, 20, 680, 50);
         headerPanel.setLayout(null);
         frame.add(headerPanel);
 
-        // Books Label (Smaller Size & Adjusted Width)
         booksLabel = new JLabel("Books: 0", SwingConstants.CENTER);
         booksLabel.setFont(new Font("Arial", Font.BOLD, 14));
         booksLabel.setOpaque(true);
@@ -60,7 +56,6 @@ public class Admin {
         booksLabel.setBounds(180, 10, 100, 30);
         headerPanel.add(booksLabel);
 
-        // Users Label (Smaller Size & Adjusted Width)
         usersLabel = new JLabel("Users: 0", SwingConstants.CENTER);
         usersLabel.setFont(new Font("Arial", Font.BOLD, 14));
         usersLabel.setOpaque(true);
@@ -68,27 +63,22 @@ public class Admin {
         usersLabel.setBounds(400, 10, 100, 30);
         headerPanel.add(usersLabel);
 
-        // Books Table
         mainBookTable = new JTable();
         JScrollPane bookScrollPane = new JScrollPane(mainBookTable);
         bookScrollPane.setBounds(220, 90, 640, 200);
         frame.add(bookScrollPane);
 
-        // Users Table
         mainUserTable = new JTable();
         JScrollPane userScrollPane = new JScrollPane(mainUserTable);
         userScrollPane.setBounds(220, 310, 640, 200);
         frame.add(userScrollPane);
 
-        // Load initial data
         refreshMainData();
 
-        // Add action to Manage Students Button
         manageUsersButton.addActionListener(e -> {
             openManageUsersFrame();
         });
 
-        // Add action to Manage Books Button
         manageBooksButton.addActionListener(e -> {
             openManageBooksFrame();
         });
@@ -101,12 +91,10 @@ public class Admin {
         frame.setVisible(true);
     }
 
-    // Method to refresh main screen data
     private static void refreshMainData() {
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Load books data
             String bookQuery = "SELECT book_id, title, author, category, publication_year, available_copies FROM books";
             try (PreparedStatement bookStmt = conn.prepareStatement(bookQuery);
                  ResultSet bookRs = bookStmt.executeQuery()) {
@@ -131,7 +119,6 @@ public class Admin {
                 booksLabel.setText("Books: " + bookCount);
             }
 
-            // Load users data
             String userQuery = "SELECT user_id, name, email, role FROM users";
             try (PreparedStatement userStmt = conn.prepareStatement(userQuery);
                  ResultSet userRs = userStmt.executeQuery()) {
@@ -160,7 +147,6 @@ public class Admin {
         }
     }
 
-    // Method to open Manage Users Frame
     private static void openManageUsersFrame() {
         JFrame usersFrame = new JFrame("Manage Users");
         usersFrame.setSize(800, 500);
@@ -168,34 +154,27 @@ public class Admin {
         usersFrame.setLocationRelativeTo(null);
         usersFrame.setLayout(null);
 
-        // Users Table
         JTable userTable = new JTable();
         JScrollPane userScrollPane = new JScrollPane(userTable);
         userScrollPane.setBounds(20, 20, 750, 350);
         usersFrame.add(userScrollPane);
 
-        // Buttons Panel
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setBounds(20, 380, 750, 60);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         usersFrame.add(buttonsPanel);
 
-        // Add User Button
         JButton addUserButton = new JButton("Add User");
         buttonsPanel.add(addUserButton);
 
-        // Remove User Button
         JButton removeUserButton = new JButton("Remove User");
         buttonsPanel.add(removeUserButton);
 
-        // Update User Button
         JButton updateUserButton = new JButton("Update User");
         buttonsPanel.add(updateUserButton);
 
-        // Load users data into table
         refreshUserTable(userTable);
 
-        // Add User Button Action
         addUserButton.addActionListener(e -> {
             JFrame addFrame = new JFrame("Add User");
             addFrame.setSize(350, 250);
@@ -231,7 +210,6 @@ public class Admin {
                 String email = emailField.getText();
                 
                 try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                    // Here would be the actual code to insert the user into database
                     String insertQuery = "INSERT INTO users (name, email, password, role) VALUES (?, ?, 'password123', 'user')";
                     try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
                         pstmt.setString(1, name);
@@ -241,10 +219,8 @@ public class Admin {
                     
                     JOptionPane.showMessageDialog(addFrame, "User added: " + name);
                     
-                    // Close add frame
                     addFrame.dispose();
                     
-                    // Refresh data in both frames
                     refreshUserTable(userTable);
                     refreshMainData();
                     
@@ -259,7 +235,6 @@ public class Admin {
             addFrame.setVisible(true);
         });
 
-        // Remove User Button Action
         removeUserButton.addActionListener(e -> {
             int selectedRow = userTable.getSelectedRow();
             if (selectedRow == -1) {
@@ -299,7 +274,6 @@ public class Admin {
             }
         });
 
-        // Update User Button Action
         updateUserButton.addActionListener(e -> {
             int selectedRow = userTable.getSelectedRow();
             if (selectedRow == -1) {
@@ -355,10 +329,8 @@ public class Admin {
                         if (affectedRows > 0) {
                             JOptionPane.showMessageDialog(updateFrame, "User updated successfully");
                             
-                            // Close update frame
                             updateFrame.dispose();
                             
-                            // Refresh data in both frames
                             refreshUserTable(userTable);
                             refreshMainData();
                         } else {
@@ -379,12 +351,10 @@ public class Admin {
         usersFrame.setVisible(true);
     }
     
-    // Method to refresh user table in the manage users frame
     private static void refreshUserTable(JTable userTable) {
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Load users data
             String userQuery = "SELECT user_id, name, email, role FROM users";
             try (PreparedStatement userStmt = conn.prepareStatement(userQuery);
                  ResultSet userRs = userStmt.executeQuery()) {
@@ -409,7 +379,6 @@ public class Admin {
         }
     }
 
-    // Method to open Manage Books Frame
     private static void openManageBooksFrame() {
         JFrame booksFrame = new JFrame("Manage Books");
         booksFrame.setSize(800, 500);
@@ -417,34 +386,27 @@ public class Admin {
         booksFrame.setLocationRelativeTo(null);
         booksFrame.setLayout(null);
 
-        // Books Table
         JTable bookTable = new JTable();
         JScrollPane bookScrollPane = new JScrollPane(bookTable);
         bookScrollPane.setBounds(20, 20, 750, 350);
         booksFrame.add(bookScrollPane);
 
-        // Buttons Panel
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setBounds(20, 380, 750, 60);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         booksFrame.add(buttonsPanel);
 
-        // Add Book Button
         JButton addBookButton = new JButton("Add Book");
         buttonsPanel.add(addBookButton);
 
-        // Remove Book Button
         JButton removeBookButton = new JButton("Remove Book");
         buttonsPanel.add(removeBookButton);
 
-        // Update Book Button
         JButton updateBookButton = new JButton("Update Book");
         buttonsPanel.add(updateBookButton);
 
-        // Load books data into table
         refreshBookTable(bookTable);
 
-        // Add Book Button Action
         addBookButton.addActionListener(e -> {
             JFrame addFrame = new JFrame("Add Book");
             addFrame.setSize(350, 350);
@@ -520,10 +482,8 @@ public class Admin {
                             
                             JOptionPane.showMessageDialog(addFrame, "Book added: " + title);
                             
-                            // Close add frame
                             addFrame.dispose();
                             
-                            // Refresh data in both frames
                             refreshBookTable(bookTable);
                             refreshMainData();
                         }
@@ -541,7 +501,6 @@ public class Admin {
             addFrame.setVisible(true);
         });
 
-        // Remove Book Button Action
         removeBookButton.addActionListener(e -> {
             int selectedRow = bookTable.getSelectedRow();
             if (selectedRow == -1) {
@@ -567,7 +526,6 @@ public class Admin {
                         if (affectedRows > 0) {
                             JOptionPane.showMessageDialog(booksFrame, "Book removed successfully");
                             
-                            // Refresh data in both frames
                             refreshBookTable(bookTable);
                             refreshMainData();
                         } else {
@@ -581,7 +539,6 @@ public class Admin {
             }
         });
 
-        // Update Book Button Action
         updateBookButton.addActionListener(e -> {
             int selectedRow = bookTable.getSelectedRow();
             if (selectedRow == -1) {
@@ -672,10 +629,8 @@ public class Admin {
                             if (affectedRows > 0) {
                                 JOptionPane.showMessageDialog(updateFrame, "Book updated successfully");
                                 
-                                // Close update frame
                                 updateFrame.dispose();
                                 
-                                // Refresh data in both frames
                                 refreshBookTable(bookTable);
                                 refreshMainData();
                             } else {
@@ -699,12 +654,10 @@ public class Admin {
         booksFrame.setVisible(true);
     }
     
-    // Method to refresh book table in the manage books frame
     private static void refreshBookTable(JTable bookTable) {
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Load books data
             String bookQuery = "SELECT book_id, title, author, category, publication_year, available_copies FROM books";
             try (PreparedStatement bookStmt = conn.prepareStatement(bookQuery);
                  ResultSet bookRs = bookStmt.executeQuery()) {
